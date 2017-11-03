@@ -1,4 +1,5 @@
-<!doctype html>
+<?php echo include_once 'includes/db_connect.php';?>
+<!-- <!doctype html> -->
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
@@ -35,26 +36,10 @@
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <div class='preloader'><div class='loaded'>&nbsp;</div></div>
-        <?php 
-            $query = 'SELECT * FROM utente';
-            $bound = array();
-
-            $stmt = $db->prepare($query);
-            $stmt->execute($bound);
-            
-            $num = $stmt->rowCount();
-            $li='';
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                $id = $row['id'];
-            $li.= '<li><a href="azioni.php?azione=cancella&id='.$id.'"><i class="fa fa-times-circle" aria-hidden="true"></i> Cancella profilo</a></li>';
-            }
-        ?>
-
-        
 		<div class='preloader'><div class='loaded'>&nbsp;</div></div>
         <!--Home page style-->
 
+        
 <header id="main_menu" class="header">
             <div class="main_menu_bg navbar-fixed-top">
                 <div class="container-fluid">
@@ -98,23 +83,12 @@
                                             <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-2x fa-user-circle" aria-hidden="true"></i> </a>
                                         <ul class="dropdown-menu">
-<<<<<<< HEAD
-                                            <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a></li>
-=======
                                             <li><a href="settings.php"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a></li>
->>>>>>> 102a81f965620565cd54435e42ff8d19ecaac254
                                             <li role="separator" class="divider"></li>
                                             <li><a href="#"><i class="fa fa-book" aria-hidden="true"></i> I miei libri</a></li>
                                             <li role="separator" class="divider"></li>
                                             <li><a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
-<<<<<<< HEAD
-                                            <li role="separator" class="divider"></li>
-                                            <?php
-                                            echo $li;
-                                            ?>
-=======
                                         
->>>>>>> 102a81f965620565cd54435e42ff8d19ecaac254
                                         </ul>
                                         </ul>
                                     </div>
@@ -135,18 +109,17 @@
         <?php include 'includes/bannerhome.php';?> <!-- End of Banner Section -->
 
 
-        
-     
-
-        <section class="libri">
+        <form action="check_profilo.php" id="contact-form" class="simple-form" method="post" style="padding:3rem;">
             <div class="container">
-            <h4>Ultimi Arrivi..<h4>
-            <div class="row" id="libri">
-            
-              
-            </div>
-            </div>
-        </section>
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-4" id="form">
+        
+                        </div>
+                    </div>
+            </div> 
+        </form>
+  
+           
 
             <?php include 'includes/aboutus.php';?>
                         
@@ -184,55 +157,149 @@
         <script src="assets/js/main.js"></script>
 
 
-        
-        
-        
+    
+
         <script>
 
 
-jQuery(document).ready(function() {
-    var url= 'http://localhost/artoo/biblioteca/libri_JSON.php';
+    jQuery(document).ready(function() {
+        
+        var url= 'http://localhost/artoo/biblioteca/modifica_JSON.php';
+        var id2={};
+        id2.id= localStorage.getItem("id");
+        
 
     jQuery.ajax({
-         url:url,
-         success: function(response){
-            console.log(response);
-                 jQuery.each(response, function(index, libro){
-                     console.log(libro);
-                  
-                    let tumbnail= `
-                   
-                        <div class="col-md-3">
-                        <div class="john">
-                            <div class="thumbnail">
-                                    <span class="copertina">
-                                        <img src="${libro.copertina}" class="img-responsive" id="copertina" alt="">
-                                    </span>
-                                <div class="caption">
-                                    <h5>${libro.titolo}</h5>
-                                    <h6><cite>${libro.autorenome} ${libro.autorecognome}</cite></h6>
-                                    <p><a href="#" class="btn btn-primary" role="button">Noleggia</a> 
-                                </div>
-                            </div>
-                        </div>
-                           
-                    </div>`
-                             
-                    ;
+        url:url,
+        type: "POST",
+        data: JSON.stringify(id2),
+        processData: false,
+        success: function(utente){
+        console.log(utente);
+       
 
-                    jQuery("#libri").append(tumbnail);
-                 
-                 });
-                  
-         },
-         error: function(errore){
-             console.log(error);
- 
-         }
- 
-     });
-    });
+
+        let form=`
         
+       
+        <h3>Modifica profilo</h3>
+            <div class="form-group">
+                <label>Nome</label>
+                <input type="text" class="form-control" id="nome" value=${utente.nome} placeholder="Nome">
+            </div>
+            <div class="form-group">
+                <label>Cognome</label>
+                <input type="text" class="form-control" id="cognome" value=${utente.cognome} placeholder="Cognome">
+            </div>
+            <div class="form-group">
+                <label>email</label>
+                <input type="email" class="form-control" id="email" value=${utente.email}  placeholder="email">
+            </div>
+            <div class="form-group">
+                <label>Telefono</label>
+                <input type="text" class="form-control" id="telefono" value=${utente.telefono} placeholder="Telefono">
+            </div>
+            <div class="form-group">
+                <label>password</label>
+                <input type="password" class="form-control" id="password" value=${utente.password} placeholder="password">
+            </div>
+            <div class="form-group">
+                <label>Data di nascita</label>
+                <input type="date" class="form-control" id="nascita" value=${utente.data_nascita} placeholder="Data di nascita">
+            </div>
+            <div class="form-group">
+                <label >Luogo di ascita</label>
+                <input type="text" class="form-control" id="luogo" value=${utente.luogo_nascita} placeholder="Luogo di nascita">
+            </div>
+            <div class="form-group">
+                <label >Città</label>
+                <input type="text" class="form-control" value=${utente.citta} id="citta" placeholder="Città">
+            </div>
+            <div class="form-group">
+                <label >Provincia</label>
+                <input type="text" class="form-control" id="provincia" value=${utente.provincia} placeholder="Provincia">
+            </div>
+            <div class="form-group">
+                <label>Stato</label>
+                <input type="text" class="form-control" id="stato" value=${utente.stato} placeholder="Stato">
+            </div>
+            <button type="submit" class="btn btn-default" style="background-color: #90abc5 ; color:#fff;">Modifica Profilo</button>
+ `       ;
+            jQuery("#form").append(form);
+        },
+        error: function(errore){
+            console.log(error);
+
+        }
+
+    });
+   });
+
+       
+
+   jQuery(document).ready(function() {
+   $("#contact-form").on("submit",function(event){
+       event.preventDefault();
+        var url= 'http://localhost/artoo/biblioteca/check_profilo.php';
+        var date={};
+        date.id=localStorage.getItem("id");
+        date.nome= $("#nome").val();
+        date.cognome= $("#cognome").val();
+        date.email= $("#email").val();
+        date.telefono= $("#telefono").val();
+        date.password= $("#password").val();
+        date.nascita= $("#nascita").val();
+        date.luogo= $("#luogo").val();
+        date.citta= $("#citta").val();
+        date.provincia= $("#provincia").val();
+        date.stato= $("#stato").val();
+   jQuery.ajax({
+        url:url,
+        type: "POST",
+        data: JSON.stringify(date),
+        processData: false,
+        success: function(response){
+        console.log(response);
+                 
+        },
+        error: function(errore){
+            console.log(error);
+
+        }
+
+    });
+   });
+});
 </script>
+
+<!-- <script>
+
+
+    jQuery(document).ready(function() {
+        
+        var url= 'http://localhost/artoo/biblioteca/check_profilo.php';
+        var id3={};
+        id3.id= localStorage.getItem("id");
+
+    jQuery.ajax({
+        url:url,
+        type: "POST",
+        data: JSON.stringify(id3),
+        processData: false,
+        success: function(utente){
+        console.log(utente);
+       
+        error: function(errore){
+            console.log(error);
+
+        }
+
+
+   }
+    });
+    }):
+
+       
+</script> -->
     </body>
 </html>

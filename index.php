@@ -84,9 +84,8 @@
             </div>
         
         </section><!-- End of Pricing Section -->
-        <section id="review">
         <?php include 'includes/review.php';?>
-        </section>
+        <!-- <?php include 'includes/review.php';?> -->
 
         
         <?php include 'includes/social.php';?>

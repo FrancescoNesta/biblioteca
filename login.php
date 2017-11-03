@@ -81,7 +81,6 @@
             <?php include 'includes/aboutus.php';?>
                         
 
-                  
         </section><!-- End of Pricing Section -->
         <?php include 'includes/review.php';?>
         <!-- <?php include 'includes/review.php';?> -->
@@ -116,39 +115,40 @@
 
 
 jQuery(document).ready(function() {
-  $("#contact-form").on("submit",function(event){
-      event.preventDefault();
-       var url= 'http://localhost/artoo/biblioteca/check_login.php';
-      var data={};
-       data.id= $("#id").val();
-      data.utente= $("#utente").val();
-      data.password= $("#password").val();
-  jQuery.ajax({
-       url:url,
-       type: "POST",
-       data: JSON.stringify(data),
-       processData: false,
-       success: function(response){
-       console.log(response);
-                 if(response.esito==true) {
-                  localStorage.setItem(response.id, response.email);
-                  location.href = 'protetta.php';
-                   }
-                   else{
-                  location.href = 'login.php?errore=1';    
-                   }
-               
-       },
-       error: function(errore){
-           console.log(error);
+   $("#contact-form").on("submit",function(event){
+       event.preventDefault();
+        var url= 'http://localhost/artoo/biblioteca/check_login.php';
+       var data={};
+        data.id= $("#id").val();
+       data.utente= $("#utente").val();
+       data.password= $("#password").val();
+   jQuery.ajax({
+        url:url,
+        type: "POST",
+        data: JSON.stringify(data),
+        processData: false,
+        success: function(response){
+        console.log(response);
+                  if(response.esito==true) {
+                    localStorage.setItem("id",response.id);
+                    localStorage.setItem("email",response.email);
+                    location.href = 'protetta.php';   
+                    }
+                    else{
+                   location.href = 'login.php';    
+                    }
+                 
+        },
+        error: function(errore){
+            console.log(error);
 
-       }
+        }
 
+    });
    });
-  });
 });
 
-      
+       
 </script>
         
 
