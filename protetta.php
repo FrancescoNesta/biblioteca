@@ -37,18 +37,18 @@
         <![endif]-->
         <div class='preloader'><div class='loaded'>&nbsp;</div></div>
         <?php 
-            $query = 'SELECT * FROM utente';
-            $bound = array();
+            // $query = 'SELECT * FROM utente';
+            // $bound = array();
 
-            $stmt = $db->prepare($query);
-            $stmt->execute($bound);
+            // $stmt = $db->prepare($query);
+            // $stmt->execute($bound);
             
-            $num = $stmt->rowCount();
-            $li='';
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                $id = $row['id'];
-            $li.= '<li><a href="azioni.php?azione=cancella&id='.$id.'"><i class="fa fa-times-circle" aria-hidden="true"></i> Cancella profilo</a></li>';
-            }
+            // $num = $stmt->rowCount();
+            // $li='';
+            // while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            //     $id = $row['id'];
+            // $li.= '<li><a href="azioni.php?azione=cancella&id='.$id.'"><i class="fa fa-times-circle" aria-hidden="true"></i> Cancella profilo</a></li>';
+            // }
         ?>
 
         
@@ -98,23 +98,12 @@
                                             <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-2x fa-user-circle" aria-hidden="true"></i> </a>
                                         <ul class="dropdown-menu">
-<<<<<<< HEAD
-                                            <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a></li>
-=======
                                             <li><a href="settings.php"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a></li>
->>>>>>> 102a81f965620565cd54435e42ff8d19ecaac254
                                             <li role="separator" class="divider"></li>
                                             <li><a href="#"><i class="fa fa-book" aria-hidden="true"></i> I miei libri</a></li>
                                             <li role="separator" class="divider"></li>
                                             <li><a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
-<<<<<<< HEAD
-                                            <li role="separator" class="divider"></li>
-                                            <?php
-                                            echo $li;
-                                            ?>
-=======
                                         
->>>>>>> 102a81f965620565cd54435e42ff8d19ecaac254
                                         </ul>
                                         </ul>
                                     </div>
